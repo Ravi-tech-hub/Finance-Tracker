@@ -1,1 +1,1 @@
-﻿# Smart-Finance-Tracker
+# Finance-Tracker
