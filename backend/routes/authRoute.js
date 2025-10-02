@@ -1,11 +1,4 @@
 const express = require("express");
-<<<<<<< HEAD
-const authRouter = express.Router();
-const authController = require("../controllers/authControllers");
-authRouter.post("/login", authController.postlogin);
-authRouter.post("/signup", authController.postsignup);
-module.exports = authRouter;
-=======
 const { protect } = require("../middleware/authMiddleware");
 const {
   registerUser,
@@ -28,4 +21,3 @@ route.post("/upload-image", upload.single("image"), (req, res) => {
   res.status(200).json({ imageUrl });
 });
 module.exports = route;
->>>>>>> 8bddd71 (working on backend)

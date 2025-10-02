@@ -9,9 +9,12 @@ import SignUp from "./pages/auth/Signup";
 import Income from "./pages/Dashboard/income";
 import Expense from "./pages/Dashboard/Expenses";
 import Home from "./pages/Dashboard/Home";
+import UserProvider from "./context/userContext";
+import { Toaster } from "react-hot-toast";
+import AllTransction from "./components/All Transction/AllTransction";
 function App() {
   return (
-    <>
+    <UserProvider>
       <Router>
         <Routes>
           <Route path="/" element={<Root />} />
@@ -20,9 +23,18 @@ function App() {
           <Route path="/dashboard" exact element={<Home />} />
           <Route path="/income" exact element={<Income />} />
           <Route path="/expense" exact element={<Expense />} />
+          <Route path="/allTransction" exact element={<AllTransction />} />
         </Routes>
       </Router>
-    </>
+      <Toaster
+        toastOptions={{
+          className: " px-2 py-1",
+          style: {
+            fontSize: "20px",
+          },
+        }}
+      />
+    </UserProvider>
   );
 }
 
