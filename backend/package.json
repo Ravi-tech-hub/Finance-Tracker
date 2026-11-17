@@ -21,6 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.541.0",
     "mongoose": "^8.18.0",
-    "nodeman": "^1.1.2"
+    "multer": "^2.2.0",
+    "nodeman": "^1.1.2",
+    "xlsx": "^0.18.5"
   }
 }

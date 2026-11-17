@@ -1,8 +1,11 @@
-export const validateEmail = ({ email }) => {
+import moment from "moment";
+
+export const validateEmail = (email = "") => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(email);
+  return regex.test(email.trim());
 };
-export const addThousandsSeprator = (num) => {
+
+export const addThousandsSeparator = (num) => {
   if (num == null || isNaN(num)) return "";
   const [integerPart, fractionPart] = num.toString().split(".");
   const formattedInteger = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -11,6 +14,8 @@ export const addThousandsSeprator = (num) => {
     : formattedInteger;
 };
 
+export const addThousandsSeprator = addThousandsSeparator;
+
 export const prepareExpenseBarCharData = (data = []) => {
   const charData = data.map((item) => ({
     source: item?.category,
@@ -18,7 +23,7 @@ export const prepareExpenseBarCharData = (data = []) => {
   }));
   return charData;
 };
-import moment from "moment";
+
 export const prepareIncomeBarCharData = (data = []) => {
   const sortedData = [...data].sort(
     (a, b) => new Date(a.date) - new Date(b.date)

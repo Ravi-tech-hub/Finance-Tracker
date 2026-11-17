@@ -24,12 +24,12 @@ const SignUp = () => {
       setError("Enter your name");
       return;
     }
-    if (validateEmail(email)) {
-      setError("Please Enter valid Email");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
       return;
     }
     if (!password) {
-      setError("Enter a passowrd");
+      setError("Enter a password");
       return;
     }
     setError("");
@@ -58,72 +58,89 @@ const SignUp = () => {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
-        setError("something went wrong please try again later", error);
+        setError("Something went wrong. Please try again later.");
       }
     }
   };
   return (
     <AuthLayout>
-      <div className="lg:w-[100%] h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black">Create an Account</h3>
-        <p className="text-xs text-slate-700 mt-[5px] mb-6">
-          Join us By Entering your detail below
+      <div className="w-full max-w-2xl h-auto md:h-full mt-10 md:mt-0 flex flex-col justify-center">
+        <p className="text-sm font-medium text-emerald-700 mb-2">
+          Start tracking smarter
         </p>
-        <form onSubmit={handleSignup}>
+        <h3 className="text-3xl font-semibold text-slate-950">
+          Create an account
+        </h3>
+        <p className="text-sm text-slate-500 mt-2 mb-8">
+          Build a simple money picture from your income and spending.
+        </p>
+        <form onSubmit={handleSignup} className="space-y-4">
           <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="fullName" className="mx-4">
+              <label
+                htmlFor="fullName"
+                className="text-sm font-medium text-slate-700"
+              >
                 Full Name
               </label>
               <input
+                id="fullName"
                 type="text"
                 value={fullName}
                 onChange={({ target }) => setFullName(target.value)}
                 label="Full Name"
                 placeholder="Ravi Prakash"
-                className="w-full  justify-between gap-3 text-sm text-black bg-slate-200 rounded-lg px-3 py-4 mb-4 mx-3 border border-slate-400 outline-none"
+                className="w-full mt-2 text-sm text-slate-950 bg-slate-50 rounded-lg px-4 py-3 border border-slate-200 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               />
             </div>
 
             <div>
-              <label htmlFor="email" className="mx-4">
+              <label
+                htmlFor="email"
+                className="text-sm font-medium text-slate-700"
+              >
                 Email Address
               </label>
               <input
+                id="email"
                 type="text"
                 value={email}
                 onChange={({ target }) => setEmail(target.value)}
                 label="Email Address"
-                placeholder="abc@123.com"
-                className="w-full  justify-between gap-3 text-sm text-black bg-slate-200 rounded-lg px-3 py-4 mb-4 mx-3 border border-slate-400 outline-none"
+                placeholder="you@example.com"
+                className="w-full mt-2 text-sm text-slate-950 bg-slate-50 rounded-lg px-4 py-3 border border-slate-200 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               />
             </div>
             <div>
-              <label htmlFor="password" className="mx-4">
+              <label
+                htmlFor="password"
+                className="text-sm font-medium text-slate-700"
+              >
                 Password
               </label>
               <input
+                id="password"
                 type="password"
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
                 label="password"
-                placeholder="Min-8 char"
-                className="w-full  justify-between gap-3 text-sm text-black bg-slate-200 rounded-lg px-3 py-4 mb-4 mx-3 border border-slate-400 outline-none"
+                placeholder="Minimum 8 characters"
+                className="w-full mt-2 text-sm text-slate-950 bg-slate-50 rounded-lg px-4 py-3 border border-slate-200 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
               />
             </div>
           </div>
-          {error && <p className="text-red-600 text-center pb-2.5">{error}</p>}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
             type="submit"
-            className="w-full  text-sm font-medium text-white bg-green-500 shadow-lg shadow-green-400/5 p-[10px] rounded-lg my-1 hover:bg-green-600/15 hover:text-green-600"
+            className="w-full text-sm font-semibold text-white bg-emerald-600 shadow-lg shadow-emerald-600/15 p-3 rounded-lg hover:bg-emerald-700 transition-colors"
           >
-            SignUp
+            Sign up
           </button>
-          <p className="text-[13px] text-slate-800 mt-3">
-            Already have account?
-            <Link className="font-medium text-green-500" to="/login">
+          <p className="text-sm text-slate-600 mt-3">
+            Already have an account?{" "}
+            <Link className="font-medium text-emerald-700" to="/login">
               Login
             </Link>
           </p>

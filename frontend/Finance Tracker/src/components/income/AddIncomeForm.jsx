@@ -10,53 +10,56 @@ const AddIncomeForm = ({ onAddIncome }) => {
   const handleChange = (key, value) => setIncome({ ...income, [key]: value });
 
   return (
-    <div className="">
+    <div className="space-y-4">
       <EmojiPickerPopup
         icon={income.icon}
         onSelect={(selectedIcon) => handleChange("icon", selectedIcon)}
       />
 
-      <label htmlFor="Source of Income" className=" px-2 font-medium">
+      <label htmlFor="income-source" className="text-sm font-medium text-slate-700">
         Income Source
       </label>
       <input
-        className="w-full py-3 px-4 border mb-2  mt-2 rounded-lg   font-medium bg-gray-200"
+        id="income-source"
+        className="w-full py-3 px-4 border border-slate-200 mt-2 rounded-lg font-medium bg-slate-50 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
         value={income.source}
         onChange={({ target }) => handleChange("source", target.value)}
         label="Income Source"
-        placeholder="Feerlance,Salary ,etc"
+        placeholder="Salary, freelance, investment"
         type="text"
       />
 
-      <label htmlFor="Amount" className=" px-2 font-medium">
+      <label htmlFor="income-amount" className="text-sm font-medium text-slate-700">
         Amount
       </label>
       <input
-        className="w-full py-3 px-4 border mb-2 mt-2 rounded-lg font-medium bg-gray-200 "
+        id="income-amount"
+        className="w-full py-3 px-4 border border-slate-200 mt-2 rounded-lg font-medium bg-slate-50 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
         value={income.amount}
         onChange={({ target }) => handleChange("amount", target.value)}
         label="Amount"
         type="number"
       />
 
-      <label htmlFor="Date" className=" px-2 font-medium">
+      <label htmlFor="income-date" className="text-sm font-medium text-slate-700">
         Date
       </label>
       <input
+        id="income-date"
         value={income.date}
         onChange={({ target }) => handleChange("date", target.value)}
         label="Date"
         type="date"
-        className="w-full py-3 px-4 border mb-2  mt-2 rounded-lg font-medium bg-gray-200"
+        className="w-full py-3 px-4 border border-slate-200 mt-2 rounded-lg font-medium bg-slate-50 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
       />
 
       <div className="flex justify-end mt-6">
         <button
           type="button"
-          className="bg-green-500 text-xl font-medium text-white py-1 px-2 rounded-lg"
+          className="bg-emerald-600 text-sm font-semibold text-white py-2.5 px-4 rounded-lg hover:bg-emerald-700"
           onClick={() => onAddIncome(income)}
         >
-          Add Income{" "}
+          Add Income
         </button>
       </div>
     </div>

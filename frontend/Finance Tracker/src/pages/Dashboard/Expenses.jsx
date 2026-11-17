@@ -19,19 +19,18 @@ const Expense = () => {
     data: null,
   });
   const [expenseData, setexpenseData] = useState([]);
-  const fetchExpenseDeatil = async () => {
+  const fetchExpenseDetail = async () => {
     if (loading) return;
     setLoading(true);
     try {
       const response = await axiosInstance.get(
         `${API_PATHS.EXPENSE.GET_ALL_EXPENSE}`
       );
-      console.log(response.data);
       if (response.data) {
         setexpenseData(response.data);
       }
     } catch (error) {
-      console.log("Something error occur ! please try again", error);
+      console.log("Something went wrong while loading expenses:", error);
     } finally {
       setLoading(false);
     }
@@ -40,7 +39,8 @@ const Expense = () => {
   const handleAddExpense = async (expense) => {
     const { category, amount, date, icon } = expense;
     if (!category.trim()) {
-      toast.error("Category is Required");
+      toast.error("Category is required");
+      return;
     }
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
       toast.error("Amount should be greater than 0");
@@ -48,6 +48,7 @@ const Expense = () => {
     }
     if (!date) {
       toast.error("Date is required");
+      return;
     }
     try {
       await axiosInstance.post(API_PATHS.EXPENSE.ADD_EXPENSE, {
@@ -57,10 +58,10 @@ const Expense = () => {
         icon,
       });
       setOpenAddExpenseModal(false);
-      toast.success("Expense Added succesfully");
-      fetchExpenseDeatil();
+      toast.success("Expense added successfully");
+      fetchExpenseDetail();
     } catch (error) {
-      console.log("Error occured", error);
+      console.log("Error occurred", error);
     }
   };
   const handleDownloadExpenseDetails = async () => {
@@ -74,37 +75,37 @@ const Expense = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("dowmload", "expense_details.xlsx");
+      link.setAttribute("download", "expense_details.xlsx");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.log("Error occured", error);
-      toast.error("Failed to download Expense Details");
+      console.log("Error occurred", error);
+      toast.error("Failed to download expense details");
     }
   };
 
   const deleteExpense = async (id) => {
     try {
       await axiosInstance.delete(API_PATHS.EXPENSE.DELETE_EXPENSE(id));
-      setOpenDeleteAlert({ show: false, date: null });
-      toast.success("Expense Details Deleted sucessfully");
-      fetchExpenseDeatil();
+      setOpenDeleteAlert({ show: false, data: null });
+      toast.success("Expense details deleted successfully");
+      fetchExpenseDetail();
     } catch (error) {
-      console.log("Error occured", error);
+      console.log("Error occurred", error);
     }
   };
 
   useEffect(() => {
-    fetchExpenseDeatil();
+    fetchExpenseDetail();
     return () => {};
   }, []);
   return (
     <DashboardLayout activeMenu="Expense">
-      <div className="my-5 mx-auto">
-        <div className="grid grid-cols-1 gap-6">
-          <div className="">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-5">
+          <div>
             <ExpenseOverview
               transaction={expenseData}
               onAddExpense={() => setOpenAddExpenseModal(true)}
@@ -132,7 +133,7 @@ const Expense = () => {
           title="Delete Expense"
         >
           <DeleteAlert
-            content="Are you want to delete this Expense Details"
+            content="Are you sure you want to delete this expense record?"
             onDelete={() => deleteExpense(openDeleteAlert.data)}
           />
         </Model>

@@ -1,33 +1,38 @@
 import { LuDownload } from "react-icons/lu";
-import TransctionInfoCard from "../card/TransctionInfoCard";
+import TransactionInfoCard from "../card/TransactionInfoCard";
 import moment from "moment";
 
 const IncomeList = ({ transaction, onDelete, onDownload }) => {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-md shadow-gray-100 border border-gray-200/50">
+    <div className="bg-white p-6 rounded-lg shadow-sm shadow-slate-200/70 border border-slate-200">
       <div className="flex items-center justify-between ">
-        <h5 className="text-lg font-medium ">All Income </h5>
+        <h5 className="text-lg font-semibold text-slate-950">All Income</h5>
         <button
-          className="flex items-center gap-3 text-[12px] font-medium text-gray-700 hover:text-green-400 bg-gray-50 hover:bg-green-50  px-2 py-2  rounded-lg border  border-gray-200/50 cursor-pointer "
+          className="flex items-center gap-2 text-xs font-medium text-slate-600 hover:text-emerald-700 bg-slate-50 hover:bg-emerald-50 px-3 py-2 rounded-lg border border-slate-200 cursor-pointer"
           onClick={onDownload}
         >
           <LuDownload className="text-base" />
-          Dowuload
+          Download
         </button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 mt-5">
         {transaction?.map((income) => (
-          <TransctionInfoCard
+          <TransactionInfoCard
             key={income._id}
             title={income.source}
             icon={income.icon}
-            date={moment(income.date).format("DD MM YYYY")}
+            date={moment(income.date).format("DD MMM YYYY")}
             amount={income.amount}
             type="income"
             onDelete={() => onDelete(income._id)}
           />
         ))}
+        {!transaction?.length && (
+          <p className="text-sm text-slate-500 py-8 md:col-span-2 text-center">
+            No income records yet.
+          </p>
+        )}
       </div>
     </div>
   );

@@ -15,8 +15,8 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (validateEmail(email)) {
-      setError("Please enter valid Email");
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
       return;
     }
 
@@ -41,53 +41,61 @@ const Login = () => {
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {
-        setError("something went wrong please try again later");
+        setError("Something went wrong. Please try again later.");
       }
     }
   };
   return (
     <AuthLayout>
-      <div className="lg-w-[70%] h-3/4 md:h-full flex flex-col justify-center">
-        <h3 className="text-xl font-semibold text-black"> Welcome Back</h3>
-        <p className="text-xs  text-slate-700 mt-[5px] mb-6">
-          Please Enter your detail to login
+      <div className="w-full max-w-md h-3/4 md:h-full flex flex-col justify-center">
+        <p className="text-sm font-medium text-emerald-700 mb-2">
+          Personal finance dashboard
         </p>
-        <form onSubmit={handleLogin}>
-          <label htmlFor="email" className="mx-4">
+        <h3 className="text-3xl font-semibold text-slate-950">Welcome back</h3>
+        <p className="text-sm text-slate-500 mt-2 mb-8">
+          Sign in to review your income, expenses, and cash flow.
+        </p>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <label htmlFor="email" className="text-sm font-medium text-slate-700">
             Email Address
           </label>
           <input
+            id="email"
             type="text"
             value={email}
             onChange={({ target }) => setEmail(target.value)}
             label="Email Address"
-            placeholder="abc@123.com"
-            className="w-full flex flex-col justify-between gap-3 text-sm text-black bg-slate-200 rounded-lg px-3 py-4 mb-4 mx-3 border border-slate-400 outline-none"
+            placeholder="you@example.com"
+            className="w-full text-sm text-slate-950 bg-slate-50 rounded-lg px-4 py-3 border border-slate-200 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           />
-          <label htmlFor="password" className="mx-4">
+          <label
+            htmlFor="password"
+            className="text-sm font-medium text-slate-700"
+          >
             Password
           </label>
           <input
+            id="password"
             type="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
             label="password"
-            placeholder="Min-8 char"
-            className="w-full flex flex-col justify-between gap-3 text-sm text-black bg-slate-200 rounded-lg px-3 py-4 mb-4 mx-3 border border-slate-400 outline-none"
+            placeholder="Enter your password"
+            className="w-full text-sm text-slate-950 bg-slate-50 rounded-lg px-4 py-3 border border-slate-200 outline-none focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100"
           />
 
-          {error && <p className="text-red-600 text-center pb-2.5">{error}</p>}
+          {error && <p className="text-sm text-red-600">{error}</p>}
 
           <button
             type="submit"
-            className="w-full  text-sm font-medium text-white bg-green-500 shadow-lg shadow-green-400/5 p-[10px] rounded-lg my-1 hover:bg-green-600/15 hover:text-green-600"
+            className="w-full text-sm font-semibold text-white bg-emerald-600 shadow-lg shadow-emerald-600/15 p-3 rounded-lg hover:bg-emerald-700 transition-colors"
           >
             Login
           </button>
-          <p className="text-[13px] text-slate-800 mt-3">
-            Do not have account?
-            <Link className="font-medium text-green-500" to="/signup">
-              Signup
+          <p className="text-sm text-slate-600 mt-3">
+            Don&apos;t have an account?{" "}
+            <Link className="font-medium text-emerald-700" to="/signup">
+              Sign up
             </Link>
           </p>
         </form>

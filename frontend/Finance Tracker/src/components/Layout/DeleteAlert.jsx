@@ -1,11 +1,11 @@
 const DeleteAlert = ({ content, onDelete }) => {
   return (
     <div>
-      <p className="text-sm  font-medium">{content}</p>
+      <p className="text-sm font-medium text-slate-700">{content}</p>
       <div className="flex justify-end mt-6">
         <button
           type="button"
-          className="bg-green-200 text-white rounded-lg py-1 px-2 hover:bg-green-500"
+          className="bg-rose-600 text-white rounded-lg py-2 px-4 text-sm font-semibold hover:bg-rose-700"
           onClick={onDelete}
         >
           Delete

@@ -6,11 +6,11 @@ import axiosInstance from "../../utils/axiosinstance";
 import { API_PATHS } from "../../utils/apiPath";
 import { LuHandCoins, LuWalletMinimal } from "react-icons/lu";
 import { IoMdCard } from "react-icons/io";
-import { addThousandsSeprator } from "../../utils/helper";
+import { addThousandsSeparator } from "../../utils/helper";
 import InfoCard from "../../components/card/InfoCard";
-import RecentTransction from "../../components/Dashboard/RecentTransction";
-import FinanceOverfiew from "../../components/Dashboard/FinanceOverfiew";
-import ExpenseTransction from "../../components/Dashboard/ExpenseTransction";
+import RecentTransaction from "../../components/Dashboard/RecentTransaction";
+import FinanceOverview from "../../components/Dashboard/FinanceOverview";
+import ExpenseTransaction from "../../components/Dashboard/ExpenseTransaction";
 import Last30DayTransaction from "../../components/Dashboard/Last30DayTransaction";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
@@ -34,7 +34,7 @@ const Home = () => {
       }
     } catch (error) {
       console.log(
-        "Something error occured,",
+        "Something went wrong while loading dashboard data:",
         error.response?.data || error.message
       );
     } finally {
@@ -50,43 +50,50 @@ const Home = () => {
   return (
     <>
       <DashboardLayout activeMenu="Dashboard">
-        <div className="my-5 mx-auto">
-          <div className=" grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-6">
+            <p className="text-sm font-medium text-emerald-700">Overview</p>
+            <h1 className="text-2xl font-semibold text-slate-950 mt-1">
+              Your money snapshot
+            </h1>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <InfoCard
               icon={<IoMdCard />}
               label="Total Balance"
-              value={addThousandsSeprator(dashBoardData?.totalBalance || 0)}
-              color="bg-green-500"
+              value={addThousandsSeparator(dashBoardData?.totalBalance || 0)}
+              color="bg-emerald-600"
             />
 
             <InfoCard
               icon={<LuWalletMinimal />}
               label="Total Income"
-              value={addThousandsSeprator(dashBoardData?.totalIncome || 0)}
-              color="bg-orange-500"
+              value={addThousandsSeparator(dashBoardData?.totalIncome || 0)}
+              color="bg-indigo-600"
             />
 
             <InfoCard
               icon={<LuHandCoins />}
               label="Total Expense"
-              value={addThousandsSeprator(dashBoardData?.totalExpense || 0)}
-              color="bg-red-500"
+              value={addThousandsSeparator(dashBoardData?.totalExpense || 0)}
+              color="bg-rose-600"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-            <RecentTransction
-              transction={dashBoardData?.recentTranscation}
-              onSeeMore={() => navigate("/allTransction")}
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-5">
+            <RecentTransaction
+              transactions={dashBoardData?.recentTranscation}
+              onSeeMore={() => navigate("/transactions")}
             />
 
-            <FinanceOverfiew
+            <FinanceOverview
               totalBalance={dashBoardData?.totalBalance || 0}
               totalIncome={dashBoardData?.totalIncome || 0}
               totalExpense={dashBoardData?.totalExpense || 0}
             />
 
-            <ExpenseTransction
+            <ExpenseTransaction
               transactions={dashBoardData?.last30DaysExpense?.transaction || []}
               onSeeMore={() => navigate("/expense")}
             />

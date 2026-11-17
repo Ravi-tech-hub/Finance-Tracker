@@ -20,20 +20,18 @@ const Income = () => {
   });
   const [incomeData, setIncomeData] = useState([]);
 
-  //Get All income
-  const fetchIncomeDeatil = async () => {
+  const fetchIncomeDetail = async () => {
     if (loading) return;
     setLoading(true);
     try {
       const response = await axiosInstance.get(
         `${API_PATHS.INCOME.GET_ALL_INCOME}`
       );
-      console.log(response.data);
       if (response.data) {
         setIncomeData(response.data);
       }
     } catch (error) {
-      console.log("Something error occur ! please try again", error);
+      console.log("Something went wrong while loading income:", error);
     } finally {
       setLoading(false);
     }
@@ -42,7 +40,8 @@ const Income = () => {
   const handleAddIncome = async (income) => {
     const { source, amount, date, icon } = income;
     if (!source.trim()) {
-      toast.error("Source is Required");
+      toast.error("Source is required");
+      return;
     }
     if (!amount || isNaN(amount) || Number(amount) <= 0) {
       toast.error("Amount should be greater than 0");
@@ -50,6 +49,7 @@ const Income = () => {
     }
     if (!date) {
       toast.error("Date is required");
+      return;
     }
     try {
       await axiosInstance.post(API_PATHS.INCOME.ADD_INCOME, {
@@ -59,10 +59,10 @@ const Income = () => {
         icon,
       });
       setOpenAddIncomeModal(false);
-      toast.success("Income Added succesfully");
-      fetchIncomeDeatil();
+      toast.success("Income added successfully");
+      fetchIncomeDetail();
     } catch (error) {
-      console.log("Error occured", error);
+      console.log("Error occurred", error);
     }
   };
   const handleDownloadIncomeDetails = async () => {
@@ -76,37 +76,37 @@ const Income = () => {
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("dowmload", "income_details.xlsx");
+      link.setAttribute("download", "income_details.xlsx");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.log("Error occured", error);
-      toast.error("Failed to download Expense Details");
+      console.log("Error occurred", error);
+      toast.error("Failed to download income details");
     }
   };
 
   const deleteIncome = async (id) => {
     try {
       await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
-      setOpenDeleteAlert({ show: false, date: null });
-      toast.success("Income Details Deleted sucessfully");
-      fetchIncomeDeatil();
+      setOpenDeleteAlert({ show: false, data: null });
+      toast.success("Income details deleted successfully");
+      fetchIncomeDetail();
     } catch (error) {
-      console.log("Error occured", error);
+      console.log("Error occurred", error);
     }
   };
   useEffect(() => {
-    fetchIncomeDeatil();
+    fetchIncomeDetail();
     return () => {};
   }, []);
 
   return (
-    <DashboardLayout activeMenu="Dashboard">
-      <div className="my-5 mx-auto">
-        <div className="my-5 mx-auto">
-          <div className="">
+    <DashboardLayout activeMenu="Income">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid grid-cols-1 gap-5">
+          <div>
             <IncomeOverview
               transaction={incomeData}
               onAddIncome={() => setOpenAddIncomeModal(true)}
@@ -123,7 +123,7 @@ const Income = () => {
         <Model
           isOpen={openAddIncomeModel}
           onClose={() => setOpenAddIncomeModal(false)}
-          title="Add income"
+          title="Add Income"
         >
           <AddIncomeForm onAddIncome={handleAddIncome} />
         </Model>
@@ -134,7 +134,7 @@ const Income = () => {
           title="Delete income"
         >
           <DeleteAlert
-            content="Are you want to delete this income Details"
+            content="Are you sure you want to delete this income record?"
             onDelete={() => deleteIncome(openDeleteAlert.data)}
           />
         </Model>

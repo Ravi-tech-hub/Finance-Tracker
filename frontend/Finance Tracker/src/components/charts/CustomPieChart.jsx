@@ -25,11 +25,11 @@ const CustomPieChart = ({
             nameKey="name"
             cx="50%"
             cy="50%"
-            outerRadius={130}
-            innerRadius={100}
+            outerRadius={124}
+            innerRadius={92}
             labelLine={false}
           >
-            {data.map((entry, index) => (
+            {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={color[index % color.length]} />
             ))}
           </Pie>
@@ -42,7 +42,7 @@ const CustomPieChart = ({
                 y="50%"
                 dy={-25}
                 textAnchor="middle"
-                fill="#666"
+                fill="#64748b"
                 fontSize="14px"
               >
                 {label}
@@ -52,11 +52,11 @@ const CustomPieChart = ({
                 y="50%"
                 dy={8}
                 textAnchor="middle"
-                fill="#333"
-                fontSize="14px"
-                fontWeight="semi-bold"
+                fill="#0f172a"
+                fontSize="18px"
+                fontWeight="600"
               >
-                {totalAmount}
+                ${totalAmount}
               </text>
             </>
           )}

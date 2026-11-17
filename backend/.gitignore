@@ -1,5 +1,4 @@
-<<<<<<< HEAD
+.env
 node_modules/
-=======
 /node_modules
->>>>>>> 8bddd71 (working on backend)
+
